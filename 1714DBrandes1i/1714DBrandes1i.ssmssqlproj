@@ -22,6 +22,18 @@
           <AssociatedConnUserName />
           <FullPath>1714ArtistTable.PNG</FullPath>
         </FileNode>
+        <FileNode Name="1714Ex1i_EntitiesWorksheet.html">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>1714Ex1i_EntitiesWorksheet.html</FullPath>
+        </FileNode>
+        <FileNode Name="1714Ex1i_UserStoriesWorksheet.html">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>1714Ex1i_UserStoriesWorksheet.html</FullPath>
+        </FileNode>
         <FileNode Name="1714PersonTable.PNG">
           <AssociatedConnectionMoniker />
           <AssociatedConnSrvName />
