@@ -11,6 +11,8 @@ Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "1714DBrandes2b", "1714DBran
 EndProject
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "1714DBrandes2c", "1714DBrandes2c\1714DBrandes2c.ssmssqlproj", "{1FB60CAD-52BB-4605-A599-DD5BBFEF769D}"
 EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "1714DBrandes2D", "1714DBrandes2D\1714DBrandes2D.ssmssqlproj", "{DE550684-6E54-4B0F-AA9D-6BABABA48F0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
@@ -18,9 +20,10 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4C9FC499-65BA-4F46-8EC6-5AF6830179AE}.Default|Default.ActiveCfg = Default
 		{4222C659-D711-44D3-9774-F6455BFC47F1}.Default|Default.ActiveCfg = Default
-		{FB20A888-5503-404E-B96D-DF548CF5EBC5}.Default|Default.ActiveCfg = Default
 		{90671437-5024-4ABE-9B86-BC28131C73C7}.Default|Default.ActiveCfg = Default
 		{1FB60CAD-52BB-4605-A599-DD5BBFEF769D}.Default|Default.ActiveCfg = Default
+		{B61D06E1-3840-46AF-AA67-5AC96F8C4336}.Default|Default.ActiveCfg = Default
+		{DE550684-6E54-4B0F-AA9D-6BABABA48F0B}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
