@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="YarnProcessingModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="YarnProcessingModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="YarnProcessingModel.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="YarnProcessingModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Invoices" EntityType="YarnProcessingModel.Store.Invoices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProcessTypes" EntityType="YarnProcessingModel.Store.ProcessTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Status" EntityType="YarnProcessingModel.Store.Status" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CustomerInvoice" Association="YarnProcessingModel.Store.CustomerInvoice">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Invoice" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="InvoiceProcessType" Association="YarnProcessingModel.Store.InvoiceProcessType">
+      <End Role="Invoice" EntitySet="Invoices" />
+      <End Role="ProcessType" EntitySet="ProcessTypes" />
+    </AssociationSet>
+    <AssociationSet Name="StatusOrderHistory" Association="YarnProcessingModel.Store.StatusOrderHistory">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="OrderHistory" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="CustomerOrderHistory" Association="YarnProcessingModel.Store.CustomerOrderHistory">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="OrderHistory" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="ProcessTypeOrderHistory" Association="YarnProcessingModel.Store.ProcessTypeOrderHistory">
+      <End Role="ProcessType" EntitySet="ProcessTypes" />
+      <End Role="OrderHistory" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FistName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FinishOrderDate" Type="datetime" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="StatusId_Id" Type="int" Nullable="false" />
+    <Property Name="CustomerId_Id" Type="int" Nullable="false" />
+    <Property Name="ProcessTypeId_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProcessTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cost" Type="decimal" Nullable="false" />
+    <Property Name="ProcessDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Invoice_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusDescription" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerInvoice">
+    <End Role="Customer" Type="YarnProcessingModel.Store.Customers" Multiplicity="1" />
+    <End Role="Invoice" Type="YarnProcessingModel.Store.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="CustomerId_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InvoiceProcessType">
+    <End Role="Invoice" Type="YarnProcessingModel.Store.Invoices" Multiplicity="1" />
+    <End Role="ProcessType" Type="YarnProcessingModel.Store.ProcessTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProcessType">
+        <PropertyRef Name="Invoice_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StatusOrderHistory">
+    <End Role="Status" Type="YarnProcessingModel.Store.Status" Multiplicity="1" />
+    <End Role="OrderHistory" Type="YarnProcessingModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderHistory">
+        <PropertyRef Name="StatusId_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CustomerOrderHistory">
+    <End Role="Customer" Type="YarnProcessingModel.Store.Customers" Multiplicity="1" />
+    <End Role="OrderHistory" Type="YarnProcessingModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderHistory">
+        <PropertyRef Name="CustomerId_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProcessTypeOrderHistory">
+    <End Role="ProcessType" Type="YarnProcessingModel.Store.ProcessTypes" Multiplicity="1" />
+    <End Role="OrderHistory" Type="YarnProcessingModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProcessType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderHistory">
+        <PropertyRef Name="ProcessTypeId_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="YarnProcessingModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="YarnProcessingModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="YarnProcessingModel.Customer" />
+          <EntitySet Name="Orders" EntityType="YarnProcessingModel.Order" />
+          <EntitySet Name="Invoices" EntityType="YarnProcessingModel.Invoice" />
+          <EntitySet Name="ProcessTypes" EntityType="YarnProcessingModel.ProcessType" />
+          <EntitySet Name="Status" EntityType="YarnProcessingModel.Status" />
+          <AssociationSet Name="CustomerInvoice" Association="YarnProcessingModel.CustomerInvoice">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="InvoiceProcessType" Association="YarnProcessingModel.InvoiceProcessType">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="ProcessType" EntitySet="ProcessTypes" />
+          </AssociationSet>
+          <AssociationSet Name="StatusOrderHistory" Association="YarnProcessingModel.StatusOrderHistory">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="OrderHistory" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerOrderHistory" Association="YarnProcessingModel.CustomerOrderHistory">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="OrderHistory" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="ProcessTypeOrderHistory" Association="YarnProcessingModel.ProcessTypeOrderHistory">
+            <End Role="ProcessType" EntitySet="ProcessTypes" />
+            <End Role="OrderHistory" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FistName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <NavigationProperty Name="Invoices" Relationship="YarnProcessingModel.CustomerInvoice" FromRole="Customer" ToRole="Invoice" />
+          <NavigationProperty Name="Order" Relationship="YarnProcessingModel.CustomerOrderHistory" FromRole="Customer" ToRole="OrderHistory" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FinishOrderDate" Type="DateTime" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="StatusId" Relationship="YarnProcessingModel.StatusOrderHistory" FromRole="OrderHistory" ToRole="Status" />
+          <NavigationProperty Name="CustomerId" Relationship="YarnProcessingModel.CustomerOrderHistory" FromRole="OrderHistory" ToRole="Customer" />
+          <NavigationProperty Name="ProcessTypeId" Relationship="YarnProcessingModel.ProcessTypeOrderHistory" FromRole="OrderHistory" ToRole="ProcessType" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="CustomerId" Relationship="YarnProcessingModel.CustomerInvoice" FromRole="Invoice" ToRole="Customer" />
+          <NavigationProperty Name="ProcessTypesId" Relationship="YarnProcessingModel.InvoiceProcessType" FromRole="Invoice" ToRole="ProcessType" />
+        </EntityType>
+        <EntityType Name="ProcessType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" />
+          <Property Name="ProcessDescription" Type="String" Nullable="false" />
+          <NavigationProperty Name="Invoice" Relationship="YarnProcessingModel.InvoiceProcessType" FromRole="ProcessType" ToRole="Invoice" />
+          <NavigationProperty Name="Order" Relationship="YarnProcessingModel.ProcessTypeOrderHistory" FromRole="ProcessType" ToRole="OrderHistory" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusDescription" Type="String" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="YarnProcessingModel.StatusOrderHistory" FromRole="Status" ToRole="OrderHistory" />
+        </EntityType>
+        <Association Name="CustomerInvoice">
+          <End Type="YarnProcessingModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="YarnProcessingModel.Invoice" Role="Invoice" Multiplicity="*" />
+        </Association>
+        <Association Name="InvoiceProcessType">
+          <End Type="YarnProcessingModel.Invoice" Role="Invoice" Multiplicity="1" />
+          <End Type="YarnProcessingModel.ProcessType" Role="ProcessType" Multiplicity="*" />
+        </Association>
+        <Association Name="StatusOrderHistory">
+          <End Type="YarnProcessingModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="YarnProcessingModel.Order" Role="OrderHistory" Multiplicity="*" />
+        </Association>
+        <Association Name="CustomerOrderHistory">
+          <End Type="YarnProcessingModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="YarnProcessingModel.Order" Role="OrderHistory" Multiplicity="*" />
+        </Association>
+        <Association Name="ProcessTypeOrderHistory">
+          <End Type="YarnProcessingModel.ProcessType" Role="ProcessType" Multiplicity="1" />
+          <End Type="YarnProcessingModel.Order" Role="OrderHistory" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="YarnProcessingModelStoreContainer" CdmEntityContainer="YarnProcessingModelContainer">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="IsTypeOf(YarnProcessingModel.Customer)">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FistName" ColumnName="FistName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(YarnProcessingModel.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FinishOrderDate" ColumnName="FinishOrderDate" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="IsTypeOf(YarnProcessingModel.Invoice)">
+        <MappingFragment StoreEntitySet="Invoices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProcessTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(YarnProcessingModel.ProcessType)">
+        <MappingFragment StoreEntitySet="ProcessTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="ProcessDescription" ColumnName="ProcessDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="IsTypeOf(YarnProcessingModel.Status)">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CustomerInvoice" TypeName="YarnProcessingModel.CustomerInvoice" StoreEntitySet="Invoices">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="Id" ColumnName="CustomerId_Id" />
+      </EndProperty>
+      <EndProperty Name="Invoice">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="InvoiceProcessType" TypeName="YarnProcessingModel.InvoiceProcessType" StoreEntitySet="ProcessTypes">
+      <EndProperty Name="Invoice">
+        <ScalarProperty Name="Id" ColumnName="Invoice_Id" />
+      </EndProperty>
+      <EndProperty Name="ProcessType">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="StatusOrderHistory" TypeName="YarnProcessingModel.StatusOrderHistory" StoreEntitySet="Orders">
+      <EndProperty Name="Status">
+        <ScalarProperty Name="Id" ColumnName="StatusId_Id" />
+      </EndProperty>
+      <EndProperty Name="OrderHistory">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerOrderHistory" TypeName="YarnProcessingModel.CustomerOrderHistory" StoreEntitySet="Orders">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="Id" ColumnName="CustomerId_Id" />
+      </EndProperty>
+      <EndProperty Name="OrderHistory">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProcessTypeOrderHistory" TypeName="YarnProcessingModel.ProcessTypeOrderHistory" StoreEntitySet="Orders">
+      <EndProperty Name="ProcessType">
+        <ScalarProperty Name="Id" ColumnName="ProcessTypeId_Id" />
+      </EndProperty>
+      <EndProperty Name="OrderHistory">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
